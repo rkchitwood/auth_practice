@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div id="usercontainer">
+    {% if 'username' in session %}
+        {{ user.username }}
+        {{ user.email }}
+        {{ user.first_name }}
+        {{ user.last_name }}
+
+        {% for fb in feedback %}
+        {% if session['username'] == fb.username %}
+        <a href="/feedback/{{ fb.id }}/update"><button>update</button></a>
+        <form action="/feedback/{{ fb.id }}/delete" method="post">
+            <button type="submit">delete</button>
+        </form>
+        {% endif %}
+        {{ fb.title }}
+        {{ fb.content }}
+        {% endfor %}
+
+    {% endif %}
+    <form action="/users/{{ user.username }}/delete" method="post">
+        <button type="submit">Delete User</button>
+    </form>
+</div>
+
+{% endblock %}
